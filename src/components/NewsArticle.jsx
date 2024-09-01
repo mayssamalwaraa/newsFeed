@@ -9,33 +9,38 @@ const StyledCard = styled(Card)(({ theme }) => ({
   margin: theme.spacing(2, 0),
 }));
 function NewsArticle(props) {
-    const 
+  const { image, title, description, author, publishedAt } = props;
   return (
     <StyledCard>
       <CardActionArea>
-        <CardMedia
-          component="img"
-          height="200"
-          image="https://placeholder.co/150"
-          alt="Sample article"
-        />
+        {image && (
+          <CardMedia
+            component="img"
+            height="200"
+            image={image}
+            alt="Sample article"
+          />
+        )}
         <CardContent>
           <Typography gutterBottom variant="h6" component="div">
-            Sample Article (Title)
+            {title}
           </Typography>
           <Typography variant="body2" color="textSecondary">
-            This is a sample article (Description)
+            {description}
           </Typography>
         </CardContent>
       </CardActionArea>
       <Box p={2}>
         <Typography variant="caption" color="textSecondary" display="block">
-          John Doe (Author)
+          {author}
         </Typography>
-        <Typography variant="caption" color="textSecondary">
-          Tuesday October 3rd, 2023
-        </Typography>
+        {publishedAt && (
+          <Typography variant="caption" color="textSecondary">
+            {new Date(publishedAt).toLocaleDateString()}
+          </Typography>
+        )}
       </Box>
     </StyledCard>
   );
 }
+export default NewsArticle;
