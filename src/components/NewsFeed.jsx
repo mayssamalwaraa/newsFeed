@@ -1,12 +1,14 @@
 import NewsArticle from "./NewsArticle";
 
 function NewsFeed(props) {
-    const {articles}=props;
-    return (
-        <div>
-            {articles.map((article)=><NewsArticle key={JSON.stringify(article)} article={...article} />)}
-        </div>
-    )
+  const { articles } = props;
+  return (
+    <div>
+      {articles.map((article) => (
+        <NewsArticle key={JSON.stringify(article)} {...article} />
+      ))}
+    </div>
+  );
 }
 
-export default NewsFeed
+export default NewsFeed;
