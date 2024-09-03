@@ -33,8 +33,10 @@ function App() {
     }
     // console.log(`data ${data}`);
     return data.articles.map((article) => {
-      const { title, description, author, publishedAt, urlToImage } = article;
+      const { title, description, author, publishedAt, urlToImage, url } =
+        article;
       return {
+        url,
         title,
         description,
         author,
