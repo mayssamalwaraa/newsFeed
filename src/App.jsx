@@ -17,12 +17,13 @@ const Footer = styled("div")(({ theme }) => ({
 function App() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [category, setCategory] = useState("general");
   const [error, setError] = useState("");
   const pageNumber = useRef(1);
   const queryValue = useRef("");
-  const loadArticles = async (inputQuery, page) => {
+  const loadArticles = async (currentCategory) => {
     const response = await fetch(
-      `https://newsapi.org/v2/top-headlines?q=${queryValue.current}&page=${pageNumber.current}&pageSize=${PAGE_SIZE}&country=eg&apiKey=${API_KEY}`
+      `https://newsapi.org/v2/top-headlines?category=${currentCategory}&q=${queryValue.current}&page=${pageNumber.current}&pageSize=${PAGE_SIZE}&country=eg&apiKey=${API_KEY}`
     );
     // if (!response.ok) console.log("errrrrrrrrrrrrrrr");
 
@@ -44,10 +45,10 @@ function App() {
   };
   console.log("reeevaluted");
 
-  const fetchandUpdateArticles = () => {
+  const fetchandUpdateArticles = (currentCategory) => {
     setLoading(true);
     setError("");
-    loadArticles()
+    loadArticles(currentCategory ?? category)
       .then((newArticles) => {
         setArticles(newArticles);
       })
@@ -75,9 +76,18 @@ function App() {
     pageNumber.current += 1;
     fetchandUpdateArticles();
   };
+  const onChangeCategory = (event) => {
+    setCategory(event.target.value);
+    pageNumber.current = 1;
+    fetchandUpdateArticles(event.target.value);
+  };
   return (
     <Container>
-      <NewsHeader onSearchChange={handleSearchInput} />
+      <NewsHeader
+        onSearchChange={handleSearchInput}
+        category={category}
+        onCategoryChange={onChangeCategory}
+      />
 
       {error.length === 0 ? (
         <NewsFeed articles={articles} loading={loading} />
