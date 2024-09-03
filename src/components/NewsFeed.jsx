@@ -1,22 +1,12 @@
 import { CircularProgress, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import LoadingArticle from "./LoadingArticle";
 import NewsArticle from "./NewsArticle";
 
 function NewsFeed(props) {
   const { articles, loading } = props;
-  if (loading) {
-    return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        height="50vh"
-      >
-        <CircularProgress />
-      </Box>
-    );
-  }
-  if (!articles.length) {
+
+  if (!loading && !articles.length) {
     return (
       <Typography
         align="center"
@@ -30,9 +20,12 @@ function NewsFeed(props) {
   }
   return (
     <div>
-      {articles.map((article) => (
-        <NewsArticle key={JSON.stringify(article)} {...article} />
-      ))}
+      {loading &&
+        [...Array(5)].map((_, index) => <LoadingArticle key={index} />)}
+      {!loading &&
+        articles.map((article) => (
+          <NewsArticle key={JSON.stringify(article)} {...article} />
+        ))}
     </div>
   );
 }

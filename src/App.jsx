@@ -90,14 +90,14 @@ function App() {
         <Button
           variant="outlined"
           onClick={handlePerviousClick}
-          disabled={pageNumber.current == 1}
+          disabled={loading || pageNumber.current == 1}
         >
           Previous
         </Button>
         <Button
           variant="outlined"
           onClick={handleNextClick}
-          disabled={articles.length < PAGE_SIZE}
+          disabled={loading || articles.length < PAGE_SIZE}
         >
           Next
         </Button>
